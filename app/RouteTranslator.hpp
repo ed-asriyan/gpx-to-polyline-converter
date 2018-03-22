@@ -21,8 +21,8 @@ template<class Deserializer, class Serializer>
 class RouteTranslator {
 public:
 	constexpr RouteTranslator() {
-		static_assert(std::is_base_of<core::serializers::RouteSerializer, Serializer>());
-		static_assert(std::is_base_of<core::deserializers::RouteDeserializer, Deserializer>());
+		static_assert(std::is_base_of<core::deserializers::RouteDeserializer, Deserializer>(), "Deserializer must be inherited from app::core::deserializers::RouteDeserializer");
+		static_assert(std::is_base_of<core::serializers::RouteSerializer, Serializer>(), "Serializer must be inherited from app::core::serializers::RouteSerializer");
 	}
 
 	/**
@@ -30,7 +30,7 @@ public:
 	 * @param data input data.
 	 * @return translated data.
 	 */
-	std::string translate(const std::string& data) {
+	std::string translate(const std::string& data) const {
 		const auto route = static_cast<Deserializer>(deserializer).deserialize(data);
 		return static_cast<Serializer>(serializer).serialize(route);
 	}
@@ -40,6 +40,7 @@ private:
 	Deserializer deserializer;
 
 };
+
 }
 
 #endif //APP_CORE_ROUTETRANSLATOR_HPP
