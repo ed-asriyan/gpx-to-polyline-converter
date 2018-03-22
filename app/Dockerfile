@@ -1,11 +1,7 @@
-FROM fedora 
+FROM alpine 
 MAINTAINER Ed Asriyan <ed-asriyan@protonmail.com> 
- 
-RUN yum update -y 
-RUN yum install -y gcc-c++ 
-RUN yum install -y boost-devel 
-RUN yum install -y cmake 
-RUN yum install -y make 
+
+RUN apk --no-cache add cmake make gcc g++ libc-dev linux-headers boost-dev
  
 WORKDIR /app 
 ADD ./core/ ./core 
@@ -14,8 +10,12 @@ ADD RouteTranslator.hpp .
 ADD CMakeLists.txt . 
  
 RUN cmake CMakeLists.txt 
-RUN make 
- 
-CMD ./app 
+RUN make
+
+RUN mv app ../app.run
+WORKDIR /
+RUN rm -rf app
+
+CMD ./app.run
 EXPOSE 8080
 
