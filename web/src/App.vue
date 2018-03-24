@@ -12,19 +12,20 @@
           md-button.md-raised.md-accent(v-on:click="onAddRouteClick")
             md-icon add
       md-app-content
-        HelloWorld(
+        RouteGpx(
         v-for="(route, index) in routes", :key="route.id", v-if="index === activeRouteIndex"
-        v-bind:name="route.name"
+        v-bind:gpx="route.gpx"
         )
 </template>
 
 <script>
-  import HelloWorld from './components/HelloWorld';
+  import RouteGpx from './components/RouteGpx';
+  import selectAndOpenfile from './utils/selectAndOpenFile';
 
   export default {
     name: 'App',
     components: {
-      HelloWorld,
+      RouteGpx,
     },
 
     data: () => ({
@@ -33,8 +34,16 @@
     }),
 
     methods: {
-      onAddRouteClick() {
-        this.routes.push({name: Math.round(Math.random() * 1000), id: Math.random()});
+      async onAddRouteClick() {
+        const gpx = await selectAndOpenfile({
+          accept: "application/gpx+xml",
+        });
+
+        this.routes.push({
+          gpx,
+          id: Math.random(),
+          name: Math.random(),
+        });
       },
     },
   };
