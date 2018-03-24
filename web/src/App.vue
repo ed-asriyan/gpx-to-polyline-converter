@@ -15,13 +15,14 @@
         RouteGpx(
         v-for="route in routes", :key="route.id",
         v-bind:hidden="route.id !== activeRouteId"
-        v-bind:id="route.id" v-bind:gpx="route.gpx"
+        v-bind:id="route.id" v-bind:route="route.route"
         )
 </template>
 
 <script>
   import RouteGpx from './components/RouteGpx';
   import selectAndOpenfile from './utils/selectAndOpenFile';
+  import {DeserializerJpx} from './data/route/deserializers';
 
   export default {
     name: 'App',
@@ -40,13 +41,15 @@
           accept: 'application/gpx+xml',
         });
 
-        const route = {
-          gpx,
+        const route = new DeserializerJpx(gpx).deserialize();
+
+        const obj = {
+          route: route,
           id: `routeTab${Math.round(Math.random() * 1000)}`,
-          name: Math.random(),
+          name: route.name,
         };
-        this.routes.push(route);
-        this.activeRouteId = route.id;
+        this.routes.push(obj);
+        this.activeRouteId = obj.id;
       },
     },
   };

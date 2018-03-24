@@ -4,6 +4,7 @@
 
 <script>
   import L from 'leaflet-gpx';
+  import {SerializerJpx} from '../data/route/serializers';
 
   export default {
     name: 'RouteGpx',
@@ -12,7 +13,7 @@
       id: {
         require: true,
       },
-      gpx: {
+      route: {
         require: true,
       },
     },
@@ -27,8 +28,9 @@
 
     mounted() {
       const map = L.map(this.mapId);
+      debugger;
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-      new L.GPX(this.gpx, {
+      new L.GPX(this.route.serialize(SerializerJpx), {
         async: true,
         marker_options: {
           startIconUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-icon-start.png',
