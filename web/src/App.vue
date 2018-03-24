@@ -1,8 +1,7 @@
-<template>
-  <div id="app">
-    <img src="./assets/logo.png">
-    <HelloWorld/>
-  </div>
+<template lang="pug">
+  #app
+    img(src="./assets/logo.png")
+    HelloWorld
 </template>
 
 <script>
