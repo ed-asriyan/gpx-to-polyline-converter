@@ -1,6 +1,6 @@
 <template lang="pug">
   .hello
-    h1 {{ msg }}
+    h1 {{ name }}
     h2 Essential Links
     ul
       li(v-for="item in links")
@@ -17,8 +17,10 @@
 <script>
   export default {
     name: 'HelloWorld',
+
+    props: ['name'],
+
     data: () => ({
-      msg: 'Welcome to Your Vue.js App',
       links: [
         {
           link: 'https://vuejs.org',
