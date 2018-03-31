@@ -1,13 +1,23 @@
 <template lang="pug">
-  div(:id="mapId").map
+  div
+    div(:id="mapId").map
+    List(
+      v-for="rou in route", :key="rou.id",
+        v-bind:route="rou"
+    )
 </template>
 
 <script>
   import L from 'leaflet-gpx';
   import {SerializerJpx} from '../data/route/serializers';
+  import List from './List.vue';
 
   export default {
+
     name: 'RouteGpx',
+    components: {
+      List,
+    },
 
     props: {
       id: {
@@ -41,7 +51,9 @@
       }).on('loaded', function(e) {
         map.fitBounds(e.target.getBounds());
       }).addTo(map);
+
     },
+
   };
 </script>
 
