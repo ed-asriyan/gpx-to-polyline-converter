@@ -1,6 +1,6 @@
 <template>
   <div class="list">
-      <div v-for="r in route">
+      <div v-for="r in route.points">
         <md-list class="list_el">
           <md-list-item md-expand>
             <span class="md-list-item-text">{{ r.lat }} : {{ r.lon }}</span>

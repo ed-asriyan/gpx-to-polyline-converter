@@ -2,8 +2,7 @@
   div
     div(:id="mapId").map
     List(
-      v-for="rou in route", :key="rou.id",
-        v-bind:route="rou"
+        v-bind:route="route"
     )
 </template>
 
