@@ -84,6 +84,7 @@
   vertical-align: top;
 }
 .list {
+  background: white;
   width: 320px;
   height: 410px;
   overflow-y: scroll;

@@ -1,9 +1,9 @@
 <template lang="pug">
-  div
+  div.map
     div(:id="mapId").map
     List(
         v-bind:route="route"
-    )
+    ).list
 </template>
 
 <script>
@@ -61,5 +61,9 @@
   .map {
     height: 100%;
     overflow: hidden;
+  }
+
+  .list {
+    z-index: 401;
   }
 </style>
