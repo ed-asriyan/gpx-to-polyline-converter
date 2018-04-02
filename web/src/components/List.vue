@@ -1,5 +1,7 @@
 <template>
     <div class="list">
+      <md-button v-on:click="undo" class="md-raised">Undo</md-button>
+      <md-button v-on:click="redo" class="md-raised">Redo</md-button>
       <md-list-item md-expand>
         <span> Добавить </span>
         <md-list slot="md-expand">
@@ -26,8 +28,7 @@
 </template>
 
 <script>
-  import Route from '../data/route/route.js'
-  import {InsertPoint} from '../data/route/command.js'
+  import {InsertPoint, DeletePoint, ChangePoint} from '../data/route/command.js'
 
   export default {
 
@@ -38,21 +39,34 @@
         require: true,
       },
     },
+
     methods: {
       delete_point: function (index) {
-        alert(index);
+        this.route.execute(new DeletePoint(this.route.points[index], index));
       },
+
       add_point: function () {
         this.route.execute(new InsertPoint({lat: this.lat,
                                             lon: this.lon}, this.index));
+      },
+
+      change_point: function () {
+
+      },
+
+      undo: function() {
+        this.route.undo();
+      },
+
+      redo: function() {
+        this.route.redo();
       }
     },
 
     data: () => ({
         index: 0,
         lat: 0,
-        lon: 0,
-        route: new Route()
+        lon: 0
     }),
 
   };

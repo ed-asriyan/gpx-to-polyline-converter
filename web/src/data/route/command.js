@@ -32,4 +32,36 @@ class InsertPoint extends CommandPoint {
   }
 }
 
-export {InsertPoint};
+class DeletePoint extends CommandPoint {
+  constructor(point, index) {
+    super(point);
+    this._index = index;
+  }
+
+  execute(route) {
+    route._points.splice(this._index, 1);
+  }
+
+  unExecute(route) {
+    route._points.splice(this._index, 0, this._point);
+  }
+}
+
+class ChangePoint extends CommandPoint {
+  constructor(point, index) {
+    super(point);
+    this._index = index;
+  }
+
+  execute(route) {
+    route._points.splice(this._index, 1);
+    route._points.splice(this._index, 0, this._point);
+  }
+
+  unExecute(route) {
+    route._points.splice(this._index, 1);
+    route._points.splice(this._index, 0, this._point);
+  }
+}
+
+export {InsertPoint, DeletePoint, ChangePoint};
