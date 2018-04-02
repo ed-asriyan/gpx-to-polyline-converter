@@ -16,7 +16,9 @@
           <md-list-item md-expand>
             <span class="md-list-item-text">{{ r.lat }} : {{ r.lon }}</span>
             <md-list slot="md-expand">
-              <button v-on:click="" >Изменить</button>
+              <input v-model="lat" placeholder="lat">
+              <input v-model="lon" placeholder="lon">
+              <button v-on:click="change_point(index)" >Изменить</button>
               <button v-on:click="delete_point(index)" >Удалить</button>
               <!--<input v-model="r.lat">-->
               <!--<input v-model="r.lon">-->
@@ -50,8 +52,9 @@
                                             lon: this.lon}, this.index));
       },
 
-      change_point: function () {
-
+      change_point: function (index) {
+        this.route.execute(new ChangePoint({lat: this.lat,
+                                            lon: this.lon}, index, this.route.points[index]));
       },
 
       undo: function() {

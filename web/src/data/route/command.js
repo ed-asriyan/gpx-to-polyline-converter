@@ -48,9 +48,10 @@ class DeletePoint extends CommandPoint {
 }
 
 class ChangePoint extends CommandPoint {
-  constructor(point, index) {
+  constructor(point, index, oldPoint) {
     super(point);
     this._index = index;
+    this._oldPoint = oldPoint;
   }
 
   execute(route) {
@@ -60,7 +61,7 @@ class ChangePoint extends CommandPoint {
 
   unExecute(route) {
     route._points.splice(this._index, 1);
-    route._points.splice(this._index, 0, this._point);
+    route._points.splice(this._index, 0, this._oldPoint);
   }
 }
 
