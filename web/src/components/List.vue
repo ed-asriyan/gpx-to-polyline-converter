@@ -26,7 +26,8 @@
 </template>
 
 <script>
-  var data = { index: 0 };
+  import Route from '../data/route/route.js'
+  import {InsertPoint} from '../data/route/command.js'
 
   export default {
 
@@ -42,15 +43,16 @@
         alert(index);
       },
       add_point: function () {
-        alert(this.index);
-        alert(this.lat);
+        this.route.execute(new InsertPoint({lat: this.lat,
+                                            lon: this.lon}, this.index));
       }
     },
 
     data: () => ({
         index: 0,
         lat: 0,
-        lon: 0
+        lon: 0,
+        route: new Route()
     }),
 
   };

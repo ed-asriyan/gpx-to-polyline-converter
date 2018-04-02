@@ -17,7 +17,7 @@ class CommandPoint extends Command {
   }
 }
 
-export class InsertPoint extends CommandPoint {
+class InsertPoint extends CommandPoint {
   constructor(point, index) {
     super(point);
     this._index = index;
@@ -31,3 +31,5 @@ export class InsertPoint extends CommandPoint {
     route._points.splice(this._index, 1);
   }
 }
+
+export {InsertPoint};
