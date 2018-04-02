@@ -6,9 +6,9 @@
         <md-list-item md-expand>
           <span> Добавить </span>
           <md-list slot="md-expand">
-            <input v-model="index" placeholder="index">
-            <input v-model="lat" placeholder="lat">
-            <input v-model="lon" placeholder="lon">
+            <input v-model.number="index" placeholder="index">
+            <input v-model.number="lat" placeholder="lat">
+            <input v-model.number="lon" placeholder="lon">
             <button v-on:click="add_point" >Добавить</button>
           </md-list>
         </md-list-item>
@@ -19,8 +19,8 @@
             <md-list-item md-expand>
               <span class="md-list-item-text">{{ r.lat }} : {{ r.lon }}</span>
               <md-list slot="md-expand">
-                <input v-model="lat" placeholder="lat">
-                <input v-model="lon" placeholder="lon">
+                <input v-model.number="lat" placeholder="lat">
+                <input v-model.number="lon" placeholder="lon">
                 <button v-on:click="change_point(index)" >Изменить</button>
                 <button v-on:click="delete_point(index)" >Удалить</button>
               </md-list>
