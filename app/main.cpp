@@ -15,7 +15,9 @@ template<class Deserializer, class Serializer>
 std::function<crow::response(const crow::request&)> generate_view() {
 	RouteTranslator<Deserializer, Serializer> translator;
 	return [translator](const crow::request& request) {
-		return crow::response(translator.translate(request.body));
+		auto response = crow::response(translator.translate(request.body));
+		response.set_header("Access-Control-Allow-Origin", "*");
+		return response;
 	};
 };
 

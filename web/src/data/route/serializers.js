@@ -29,3 +29,12 @@ export class SerializerJpx extends Serializer {
     `;
   }
 }
+
+export class SerializerPolyline extends Serializer {
+  serialize() {
+    return fetch("http://0.0.0.0:8080/gpx/polyline", {
+      method: 'POST',
+      body: new SerializerJpx(this._route).serialize()
+    });
+  }
+}

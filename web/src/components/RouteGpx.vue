@@ -4,11 +4,13 @@
     List(
         v-bind:route="route"
     ).list
+    md-button.md-fab.md-primary.btn(@click="getPolyline")
+      md-icon add
 </template>
 
 <script>
   import L from 'leaflet-gpx';
-  import {SerializerJpx} from '../data/route/serializers';
+  import {SerializerJpx, SerializerPolyline} from '../data/route/serializers';
   import List from './List.vue';
 
   export default {
@@ -35,9 +37,15 @@
       },
     },
 
+    methods: {
+      async getPolyline() {
+        const polyline = await new SerializerPolyline(this.route).serialize();
+        alert(await polyline.text());
+      }
+    },
+
     mounted() {
       const map = L.map(this.mapId);
-      debugger;
       L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
       new L.GPX(this.route.serialize(SerializerJpx), {
         async: true,
@@ -65,5 +73,12 @@
 
   .list {
     z-index: 401;
+  }
+
+  .btn {
+    position: absolute;
+    right: 40px;
+    bottom: 100px;
+    z-index: 402;
   }
 </style>
