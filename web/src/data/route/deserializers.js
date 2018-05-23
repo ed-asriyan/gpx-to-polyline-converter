@@ -23,10 +23,12 @@ export class DeserializerJpx extends Deserializer {
     const route = new Route();
 
     route._name = trk.getElementsByTagName('name')[0].childNodes[0].nodeValue;
-    route._points = [...trk.getElementsByTagName('trkpt')].map(point => ({
-      lat: point.getAttribute('lat'),
-      lon: point.getAttribute('lon'),
-    }));
+    route._points = [...trk.getElementsByTagName('trkpt')].map(point => {
+      const lat = point.getAttribute('lat');
+      const lon = point.getAttribute('lon');
+      if (isNaN(lat) || isNaN(lon)) throw {};
+      return { lat, lon };
+    });
 
     return route;
   }

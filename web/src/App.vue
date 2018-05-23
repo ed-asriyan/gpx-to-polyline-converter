@@ -37,19 +37,23 @@
 
     methods: {
       async onAddRouteClick() {
-        const gpx = await selectAndOpenfile({
-          accept: 'application/gpx+xml',
-        });
+        try {
+          const gpx = await selectAndOpenfile({
+            accept: 'application/gpx+xml',
+          });
 
-        const route = new DeserializerJpx(gpx).deserialize();
+          const route = new DeserializerJpx(gpx).deserialize();
 
-        const obj = {
-          route: route,
-          id: `routeTab${Math.round(Math.random() * 1000)}`,
-          name: route.name,
-        };
-        this.routes.push(obj);
-        this.activeRouteId = obj.id;
+          const obj = {
+            route: route,
+            id: `routeTab${Math.round(Math.random() * 1000)}`,
+            name: route.name,
+          };
+          this.routes.push(obj);
+          this.activeRouteId = obj.id;
+        } catch (e) {
+          alert('File is invalid');
+        }
       },
     },
   };
