@@ -23,7 +23,7 @@ export default class {
   execute(command) {
     command.execute(this);
     this._undoCommands.push(command);
-    this._redoCommands.clear();
+    this._redoCommands = [];
   }
 
   undo(level = 1) {
