@@ -2,7 +2,8 @@
   div.map
     div(:id="mapId").map
     List(
-        v-bind:route="route"
+        v-bind:route="route",
+        :onUpdate="reRender"
     ).list
     md-button.md-fab.md-primary.btn(@click="getPolyline")
       md-icon add
@@ -41,24 +42,29 @@
       async getPolyline() {
         const polyline = await new SerializerPolyline(this.route).serialize();
         alert(await polyline.text());
+      },
+
+      reRender() {
+        // alert();
+        document.getElementById(this.mapId).innerHTML = '';
+        const map = L.map(this.mapId);
+        L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        new L.GPX(this.route.serialize(SerializerJpx), {
+          async: true,
+          marker_options: {
+            startIconUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-icon-start.png',
+            endIconUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-icon-end.png',
+            shadowUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-shadow.png',
+            wptIconUrls : {},
+          },
+        }).on('loaded', function(e) {
+          map.fitBounds(e.target.getBounds());
+        }).addTo(map);
       }
     },
 
     mounted() {
-      const map = L.map(this.mapId);
-      L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-      new L.GPX(this.route.serialize(SerializerJpx), {
-        async: true,
-        marker_options: {
-          startIconUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-icon-start.png',
-          endIconUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-icon-end.png',
-          shadowUrl: 'http://github.com/mpetazzoni/leaflet-gpx/raw/master/pin-shadow.png',
-          wptIconUrls : {},
-        },
-      }).on('loaded', function(e) {
-        map.fitBounds(e.target.getBounds());
-      }).addTo(map);
-
+      this.reRender();
     },
 
   };

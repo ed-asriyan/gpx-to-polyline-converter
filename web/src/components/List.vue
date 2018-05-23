@@ -2,7 +2,7 @@
     <div class="list">
       <md-button v-on:click="undo" class="md-raised undo">Undo</md-button>
       <md-button v-on:click="redo" class="md-raised redo">Redo</md-button>
-      <div v-on:click="change_lat_lon(0, 0)">
+      <div v-on:click="change_lat_lon(lat, lon)">
         <md-list-item md-expand>
           <span> Добавить </span>
           <md-list slot="md-expand">
@@ -42,6 +42,10 @@
       route: {
         require: true,
       },
+      onUpdate: {
+        require: false,
+        default: () => {},
+      },
     },
 
     methods: {
@@ -52,24 +56,30 @@
 
       delete_point: function (index) {
         this.route.execute(new DeletePoint(this.route.points[index], index));
+        this.onUpdate();
       },
 
       add_point: function () {
         this.route.execute(new InsertPoint({lat: this.lat,
                                             lon: this.lon}, this.index));
+        // debugger;
+        this.onUpdate();
       },
 
       change_point: function (index) {
         this.route.execute(new ChangePoint({lat: this.lat,
                                             lon: this.lon}, index, this.route.points[index]));
+        this.onUpdate();
       },
 
       undo: function() {
         this.route.undo();
+        this.onUpdate();
       },
 
       redo: function() {
         this.route.redo();
+        this.onUpdate();
       }
     },
 
